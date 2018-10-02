@@ -1,6 +1,6 @@
 #define SPEED1 255  // スライダを縮める場合
 #define SPEED2 170  // スライダを高速で動かす場合（これが最高速）
-#define JITTER 20    // スライダが正しい位置に移動したかを判定する閾値
+#define JITTER 10    // スライダが正しい位置に移動したかを判定する閾値
 
 int slide;        // 受信したデータ（スライダを移動させる位置）
 int speed_level;  // 指定したモータの回転速度（現在未使用）
@@ -59,8 +59,8 @@ void slide_device(){
       }
       delay(1);
     }  
-    //digitalWrite(9, HIGH);
-    analogWrite(3, 0);
+    digitalWrite(9, HIGH);
+    analogWrite(3, 255);
   }
 //  else if(vr < slide){     // モーターA: 逆転 
 //    digitalWrite(12, LOW);
@@ -125,4 +125,8 @@ void key_move(char mode){
   }
 
   delay(10);
+}
+
+void set_deviceLength(){
+
 }
