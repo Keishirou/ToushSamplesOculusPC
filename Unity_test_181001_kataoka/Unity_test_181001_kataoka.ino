@@ -1,5 +1,5 @@
-#define SPEED2 240  // スライダを縮める場合
-#define SPEED1 170  // スライダを高速で動かす場合（これが最高速）
+#define SPEED1 255  // スライダを縮める場合
+#define SPEED2 170  // スライダを高速で動かす場合（これが最高速）
 #define JITTER 20    // スライダが正しい位置に移動したかを判定する閾値
 
 int slide;        // 受信したデータ（スライダを移動させる位置）
@@ -59,26 +59,28 @@ void slide_device(){
       }
       delay(1);
     }  
-    digitalWrite(9, HIGH);
-  }else if(vr < slide){     // モーターA: 逆転 
-    digitalWrite(12, LOW);
-    digitalWrite(9, LOW);
-    analogWrite(3, SPEED2);
-   
-   while(vr < slide){    // 受信したデータよりスライダの位置が小さい場合
-      vr = analogRead(A2);
-      int diff = vr - slide;
-      if(-JITTER < diff && diff < JITTER){  // 一定の閾値以内であれば指定の位置まで移動したとみなす
-        break;
-      }
-      if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
-        String str = Serial.readStringUntil(';');
-        slide = str.toInt();
-      }
-      delay(1);
-    }
-    digitalWrite(9, HIGH); 
+    //digitalWrite(9, HIGH);
+    analogWrite(3, 0);
   }
+//  else if(vr < slide){     // モーターA: 逆転 
+//    digitalWrite(12, LOW);
+//    digitalWrite(9, LOW);
+//    analogWrite(3, SPEED2);
+//   
+//   while(vr < slide){    // 受信したデータよりスライダの位置が小さい場合
+//      vr = analogRead(A2);
+//      int diff = vr - slide;
+//      if(-JITTER < diff && diff < JITTER){  // 一定の閾値以内であれば指定の位置まで移動したとみなす
+//        break;
+//      }
+//      if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
+//        String str = Serial.readStringUntil(';');
+//        slide = str.toInt();
+//      }
+//      delay(1);
+//    }
+//    digitalWrite(9, HIGH); 
+//  }
 }
 
 void speed_change(int speedFlag){
@@ -124,4 +126,3 @@ void key_move(char mode){
 
   delay(10);
 }
-
