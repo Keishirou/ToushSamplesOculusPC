@@ -9,7 +9,7 @@ public class DeviceController : MonoBehaviour {
     int preLength;    // yama 180118 前フレームにスライダを伸ばした距離
     int sendFlag;   // yama 180118 Arduinoに信号を送るかどうか
 
-    int arduinoFlag; //kataoka 181003 Arduino側からシリアル通信の割り込み過ぎを防ぐフラグ
+    bool arduinoFlag; //kataoka 181003 Arduino側からシリアル通信の割り込み過ぎを防ぐフラグ
 
     private string message_;
     private bool isNewMessageReceived_ = false;
@@ -42,7 +42,7 @@ public class DeviceController : MonoBehaviour {
 
     int speed_rank;         // yama 180220 モータの回転速度の段階
 
-    public bool check;      // yama 180220 モータの回転速度を変更するかどうか（仮で作成）
+    public bool check=false;      // yama 180220 モータの回転速度を変更するかどうか（仮で作成）
 
     #region 伸縮予測で使用する変数
 
@@ -316,10 +316,10 @@ public class DeviceController : MonoBehaviour {
         }
 
         #endregion
-                
-        #region 算出した伸縮距離をArduinoに送信
 
-        if (sendFlag == 1)  // yama 180215 この判定で送信処理を行わないと，送信がバグる
+        #region 算出した伸縮距離をArduinoに送信
+        if ((sendFlag == 1)&&(arduinoFlag))  // yama 180215 この判定で送信処理を行わないと，送信がバグる
+        //if (sendFlag == 1)  // yama 180215 この判定で送信処理を行わないと，送信がバグる
         {
             string str;
                         
@@ -387,6 +387,7 @@ public class DeviceController : MonoBehaviour {
         {
             OnDataReceived(message_);
         }
+        isNewMessageReceived_ = false; //勘で追加したらうまくいったっぽい
 
     }
 
@@ -399,52 +400,86 @@ public class DeviceController : MonoBehaviour {
             if (message != string.Empty)        // yama 180719 受信データが空でないか確認てから処理
             {
                 /*Arduinoが受信可能状態であるかどうかを判別*/
-                //arduinoFlag = Check_Arduino_State(message);
+                //arduinoFlag = Check_Arduino_State(message); //kataoka 181004
+                //string[] array = message.Split(',');
 
-                //Debug.Log("move = " + message);
-                /* yama 180719 デバイス静止時にスライダの位置が変化した場合の対応 */
-                if (sendFlag == 0)      // yama 180731 ここで判定している二つの条件（デバイス静止時，オブジェクトに接触）は同時に判定するとクラッシュする
+                //if (array[1] == "F")
+                //{
+                //    if (array[0] == "0")
+                //    {
+                //        //arduinoFlag = true;
+                //        arduinoFlag = false;
+                //    }
+                //    else if (array[1] == "-1")
+                //    {
+                //        arduinoFlag = false;
+                //    }
+                //}
+                //else if (array[1] == "N")
+                //{
+                    
+                //    arduinoFlag = true;
+                //}
+
+                if(message == "F")
                 {
-                    if (DtoO == true)
+                    arduinoFlag = false;
+                }else
+                {
+                    arduinoFlag = true;
+                }
+
+                if (arduinoFlag)
+                {
+                    //message = array[0];
+                    //Debug.Log("move = " + message);
+                    /* yama 180719 デバイス静止時にスライダの位置が変化した場合の対応 */
+                    if (sendFlag == 0)      // yama 180731 ここで判定している二つの条件（デバイス静止時，オブジェクトに接触）は同時に判定するとクラッシュする
                     {
-                        int diff = int.Parse(message) - preLength;  // yama 180731 現在のスライダ位置と全フレームで指定したスライダの位置の差
-                        //Debug.Log("diff = " + diff);
-
-                        if (-JITTER < diff && diff < JITTER)        // yama 180719 スライダの位置ずれが一定範囲内かどうか判定
+                        if (DtoO == true)
                         {
-                            //string str = sliderLength.ToString();     // yama 180807 一時コメントアウト
-                            //string str = nextLength.ToString();         // yama 180807 伸縮予測後のスライダの位置
-                            //string str = (preLength / 2).ToString();
+                            int diff = int.Parse(message) - preLength;  // yama 180731 現在のスライダ位置と全フレームで指定したスライダの位置の差
+                                                                        //Debug.Log("diff = " + diff);
 
-                            //if (0 <= preLength && preLength < 1024)
-                            //if (0 <= nextLength && nextLength < 1024)   // yama 180807 更新情報を送るのであればnextの長さを判定するべきでは？
-                            //{
-                            //    serialHandler.Write(str + ";");     // yama 180731 一定範囲内でなければArduinoに更新情報を送信
-                            //    Debug.Log("preLength = " + str);
-                            //}
-                            string str;
-                            if (slideMode == 0)
+                            if (-JITTER < diff && diff < JITTER)        // yama 180719 スライダの位置ずれが一定範囲内かどうか判定
                             {
-                                str = sliderLength.ToString();
-                                if (0 <= sliderLength && sliderLength < 1024)   // yama 180807 更新情報を送るのであればnextの長さを判定するべきでは？
+                                //string str = sliderLength.ToString();     // yama 180807 一時コメントアウト
+                                //string str = nextLength.ToString();         // yama 180807 伸縮予測後のスライダの位置
+                                //string str = (preLength / 2).ToString();
+
+                                //if (0 <= preLength && preLength < 1024)
+                                //if (0 <= nextLength && nextLength < 1024)   // yama 180807 更新情報を送るのであればnextの長さを判定するべきでは？
+                                //{
+                                //    serialHandler.Write(str + ";");     // yama 180731 一定範囲内でなければArduinoに更新情報を送信
+                                //    Debug.Log("preLength = " + str);
+                                //}
+                                string str;
+                                if (slideMode == 0)
                                 {
-                                    serialHandler.Write(str + ";");     // yama 180731 一定範囲内でなければArduinoに更新情報を送信
-                                    //Debug.Log("preLength = " + str);
+                                    str = sliderLength.ToString();
+                                    if (0 <= sliderLength && sliderLength < 1024)   // yama 180807 更新情報を送るのであればnextの長さを判定するべきでは？
+                                    {
+                                        serialHandler.Write(str + ";");     // yama 180731 一定範囲内でなければArduinoに更新情報を送信
+                                                                            //Debug.Log("preLength = " + str);
+                                    }
+                                }
+                                else if (slideMode == 1)
+                                {
+                                    str = nextLength.ToString();
+                                    if (0 <= nextLength && nextLength < 1024)   // yama 180807 更新情報を送るのであればnextの長さを判定するべきでは？
+                                    {
+                                        serialHandler.Write(str + ";");     // yama 180731 一定範囲内でなければArduinoに更新情報を送信
+                                                                            //Debug.Log("preLength = " + str);
+                                    }
                                 }
                             }
-                            else if (slideMode == 1)
-                            {
-                                str = nextLength.ToString();
-                                if (0 <= nextLength && nextLength < 1024)   // yama 180807 更新情報を送るのであればnextの長さを判定するべきでは？
-                                {
-                                    serialHandler.Write(str + ";");     // yama 180731 一定範囲内でなければArduinoに更新情報を送信
-                                    //Debug.Log("preLength = " + str);
-                                }
-                            }   
                         }
                     }
+                    /* ここまで */
+
                 }
-                /* ここまで */
+
+
             }
         }
         catch (System.Exception e)
@@ -498,7 +533,8 @@ public class DeviceController : MonoBehaviour {
 
         if (dis != preLength && StoF && DtoO)       // yama 180731 前フレームと伸縮位置が変更，かつRayがFloorに接触，かつデバイス先端がオブジェクトに接触している場合
         {
-            //if (arduinoFlag)
+            //kataoka 181004 
+           // if (arduinoFlag)
                 sendFlag = 1;
            
             preLength = dis;
@@ -583,7 +619,8 @@ public class DeviceController : MonoBehaviour {
 
                 if (sliderLength != preLength)
                 {
-                    //if(arduinoFlag)
+                    //kataoka 181004
+                   //if(arduinoFlag)
                     sendFlag = 1;
 
                     Debug.Log("preLength = " + preLength);
@@ -657,9 +694,11 @@ public class DeviceController : MonoBehaviour {
         }
         else if(array[1]=="N")
         {
-            &flagMessage = array;
+            flagMessage = array[0];
             return true;
         }
+            return false;
+        
     }
 
 }

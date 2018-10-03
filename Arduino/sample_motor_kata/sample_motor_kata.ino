@@ -21,6 +21,7 @@ void setup() {
 }
 
 void loop() {
+Serial.flush();
 
   int vr = analogRead(A2); //A2にボリューム部の2ピンを接続。1=5V,0=GND
   //
@@ -55,16 +56,16 @@ void loop() {
   //
   //  // 2秒間上記設定で回転
   //  delay(2000);
-  String a = String(vr); 
-  String temp = a +",N";
-  //Serial.println(vr);
-  Serial.println(temp);
+//  String a = String(vr); 
+//  String temp = a +",N";
+  Serial.println(vr);
+  //Serial.println(temp);
 }
 
 //シリアル割り込み処理
 void serialEvent() {
   //Serial.println("serialEvent1");
-  Serial.println("-1,F");
+  Serial.println("F");
   if (Serial.available() > 0) {
     str = Serial.readStringUntil(';');
     //str = Serial.readStringUntil('\n');
@@ -90,12 +91,14 @@ void serialEvent() {
           break;
         }
         /*割り込み処理で代替*/
-        /*if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
+        if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
           String str = Serial.readStringUntil(';');
           slide = str.toInt();
-          }*/
+          }
+          
         //SlideFrag = true;
         delay(1);
+        //Serial.println(vr);
       }
       digitalWrite(9, HIGH);
     } else if (vr < slide) {   // モーターA: 逆転
@@ -110,17 +113,19 @@ void serialEvent() {
           break;
         }
         /*割り込み処理で代替*/
-        /*      if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
+           if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
                 String str = Serial.readStringUntil(';');
                 slide = str.toInt();
-              }*/
+              }
+              
        // SlideFrag = true;
         delay(1);
+        //Serial.println(vr);
       }
       digitalWrite(9, HIGH);
     }
 Serial.flush();
     
   }
-  Serial.println("0,F");
+  //Serial.println("F");
 }
