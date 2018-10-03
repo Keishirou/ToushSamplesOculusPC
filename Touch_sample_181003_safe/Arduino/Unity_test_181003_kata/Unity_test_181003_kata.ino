@@ -42,8 +42,8 @@ void loop() {
     }*/
  // }
 
-  //int v = analogRead(A2);
-  //Serial.println(v);
+  int v = analogRead(A2);
+  Serial.println(v);
 }
 
 void slide_device(){
@@ -138,14 +138,24 @@ void key_move(char mode){
 
 //シリアル割り込み処理
 void serialEvent() {
-
-  if ((Serial.available() > 0)&&(SlideFrag)) {
-    //str = Serial.readStringUntil(';');
-    //slide = str.toInt();
-    slide = Serial.read();
+   Serial.println("serialEvent");    
+if (Serial.available() > 0) {
+    str = Serial.readStringUntil(';');
+    slide = str.toInt();
+    //slide = Serial.read();
     Serial.println(slide);
-    slide_device();
-    SlideFrag = false;
+     //delay(2000);
+    Serial.println("serialEvent");    
+     //delay(2000);
   }
+//  if ((Serial.available() > 0)&&(SlideFrag)) {
+//    //str = Serial.readStringUntil(';');
+//    //slide = str.toInt();
+//    slide = Serial.read();
+//    Serial.println(slide);
+//    Serial.println("serialEvent");  
+//    slide_device();
+//    SlideFrag = false;
+//  }
   
 }

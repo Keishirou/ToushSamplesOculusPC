@@ -9,6 +9,8 @@ public class DeviceController : MonoBehaviour {
     int preLength;    // yama 180118 前フレームにスライダを伸ばした距離
     int sendFlag;   // yama 180118 Arduinoに信号を送るかどうか
 
+    int arduinoFlag; //kataoka 181003 Arduino側からシリアル通信の割り込み過ぎを防ぐフラグ
+
     private string message_;
     private bool isNewMessageReceived_ = false;
 
@@ -54,7 +56,7 @@ public class DeviceController : MonoBehaviour {
 
     #endregion
 
-    int slideMode;
+    int slideMode; //伸縮予測のモード管理（ZでON，XでOFF）
         
     string objTag = "Haptic";   // yama 180822 接触感を停止したい仮想物体のタグ名
     string baseTag = "Base";    // yama 180822 ベース（実物体の机）となる仮想物体のタグ名
@@ -70,6 +72,8 @@ public class DeviceController : MonoBehaviour {
         preLength = 0;
         speed_rank = -1;
         slideMode = 1;
+
+        arduinoFlag = true;
 
         //device = GameObject.Find("Device");
 
@@ -390,11 +394,14 @@ public class DeviceController : MonoBehaviour {
     void OnDataReceived(string message)
     {
         try
-        { 
+        {
+
             if (message != string.Empty)        // yama 180719 受信データが空でないか確認てから処理
             {
-                //Debug.Log("move = " + message);
+                /*Arduinoが受信可能状態であるかどうかを判別*/
+                //arduinoFlag = Check_Arduino_State(message);
 
+                //Debug.Log("move = " + message);
                 /* yama 180719 デバイス静止時にスライダの位置が変化した場合の対応 */
                 if (sendFlag == 0)      // yama 180731 ここで判定している二つの条件（デバイス静止時，オブジェクトに接触）は同時に判定するとクラッシュする
                 {
@@ -491,8 +498,9 @@ public class DeviceController : MonoBehaviour {
 
         if (dis != preLength && StoF && DtoO)       // yama 180731 前フレームと伸縮位置が変更，かつRayがFloorに接触，かつデバイス先端がオブジェクトに接触している場合
         {
-            sendFlag = 1;
-
+            //if (arduinoFlag)
+                sendFlag = 1;
+           
             preLength = dis;
 
             StoF = false;
@@ -575,6 +583,7 @@ public class DeviceController : MonoBehaviour {
 
                 if (sliderLength != preLength)
                 {
+                    //if(arduinoFlag)
                     sendFlag = 1;
 
                     Debug.Log("preLength = " + preLength);
@@ -630,4 +639,27 @@ public class DeviceController : MonoBehaviour {
 
         return speed;
     }
+
+    /*Arduinoが受信可能状態であるかどうかを判別*/
+    bool Check_Arduino_State(string flagMessage)
+    {
+        string[] array = flagMessage.Split(',');
+
+        if (array[1]=="F")
+        {
+            if (array[0] == "0")
+            {
+                return true;
+            }else if(array[1] == "-1")
+            {
+                return false;
+            }
+        }
+        else if(array[1]=="N")
+        {
+            &flagMessage = array;
+            return true;
+        }
+    }
+
 }
