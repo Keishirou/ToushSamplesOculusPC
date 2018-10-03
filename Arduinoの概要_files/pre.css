@@ -1,0 +1,77 @@
+body {
+ margin: 6px 2px;
+ background-color: white;
+ color: black; font-size: 12pt;
+}
+h1 {
+ margin: 3px;
+ font-weight: bold; font-size: 160%; letter-spacing: 3px;
+ text-align: center;
+}
+h2 {
+ margin : 12px 0px 12px -4px; padding: 3px 7px;
+ border-style: solid; border-color: #102010; border-width: 1px 1px 1px 3px;
+ background-color: #d0f0d0;
+ font-weight: bold; font-size: 120%; letter-spacing: 4px; color: black;
+}
+h3 {
+ margin : 10px 0px 10px -2px; padding: 0px 5px;
+ border-style: none none double none; border-color: #333333; border-width: 3px;
+ font-weight: bold; font-size: 105%;
+ letter-spacing: 6px;
+}
+h4 {
+ margin: 0px;  padding: 2px;
+ font-weight: bold; font-size: 105%;
+ letter-spacing : 2px;
+}
+p {
+ margin: 6px 8px; padding: 3px;
+ font-size: 100%;
+ line-height:150%;
+}
+pre {
+ margin: 4px 2px; padding: 3px 3px 3px 1em;
+ background-color: #d8f0f0;
+ border-style: dotted;  border-color: #406060; border-width: 1px;
+ font-size: 90%;
+}
+b {
+ letter-spacing: 4px;
+}
+table{
+ margin: 12px;
+ empty-cells: show;
+}
+caption {
+ text-align:left;
+}
+img {
+  margin : 8px 6px 6px 4px;
+}
+ol {
+  line-height:130%;
+  letter-spacing 2px;
+}
+ol.roma {
+  list-style-type: upper-roman;
+}
+ol.alpha {
+  list-style-type: upper-alpha;
+}
+ol.malpha {
+  list-style-type: lower-alpha;
+}
+li {
+  margin: 1px;
+}
+ul{
+  list-style-type: square;
+}
+p.at {
+  border: double;
+  padding: 3px;
+}
+hr {
+  width: 20%;
+}
