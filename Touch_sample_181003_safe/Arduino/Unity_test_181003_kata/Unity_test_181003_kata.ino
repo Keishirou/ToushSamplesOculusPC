@@ -33,10 +33,10 @@ void loop() {
     slide = str.toInt();
     //Serial.println("1");
 */
-    if(SlideFrag){
-      slide_device();
-      SlideFrag = false;
-    }
+//    if(SlideFrag){
+//      slide_device();
+//      SlideFrag = false;
+//    }
     /*else{
       speed_change(slide);
     }*/
@@ -65,6 +65,7 @@ void slide_device(){
         String str = Serial.readStringUntil(';');
         slide = str.toInt();
       }*/
+      SlideFrag = true;
       delay(1);
     }  
     digitalWrite(9, HIGH);
@@ -84,6 +85,7 @@ void slide_device(){
         String str = Serial.readStringUntil(';');
         slide = str.toInt();
       }*/
+      SlideFrag = true;
       delay(1);
     }
     digitalWrite(9, HIGH); 
@@ -137,11 +139,13 @@ void key_move(char mode){
 //シリアル割り込み処理
 void serialEvent() {
 
-  if (Serial.available() > 0) {
-    str = Serial.readStringUntil(';');
-    slide = str.toInt();
+  if ((Serial.available() > 0)&&(SlideFrag)) {
+    //str = Serial.readStringUntil(';');
+    //slide = str.toInt();
+    slide = Serial.read();
     Serial.println(slide);
-    SlideFrag = true;
+    slide_device();
+    SlideFrag = false;
   }
   
 }
