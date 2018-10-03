@@ -66,8 +66,8 @@ void serialEvent() {
   //Serial.println("serialEvent1");
   Serial.println("-1,F");
   if (Serial.available() > 0) {
-    //str = Serial.readStringUntil(';');
-    str = Serial.readStringUntil('\n');
+    str = Serial.readStringUntil(';');
+    //str = Serial.readStringUntil('\n');
     slide = str.toInt();
     //slide = Serial.read();
     //Serial.println(slide);
