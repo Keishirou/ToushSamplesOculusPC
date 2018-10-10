@@ -1,4 +1,4 @@
-#define SPEED 255
+#define SPEED 240
 
 void setup() {
   Serial.begin(9600);

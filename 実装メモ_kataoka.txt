@@ -22,3 +22,9 @@ DeviceController.cs
 ・受信したデータがJITTERの範囲内の変化ならbreak→あれ？これはできているのでは？
 ・breakするときに「slide=vrにする」or「flashをつける」
 ・availableの後にflashをつける
+
+20181010
+そもそもflushの機能が変わっていることが発覚
+「受信バッファ削除」から「送信の完了まで待機」に変更
+
+・breakするときに「slide=vrにする」→むりげー

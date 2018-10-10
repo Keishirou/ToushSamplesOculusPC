@@ -39,12 +39,13 @@ void loop() {
   Serial.println(v);
 }
 
+/*伸縮処理*/
 void slide_device(){
   int vr = analogRead(A2); //A2にボリューム部の2ピンを接続。1=5V,0=GND
   
   if(vr > slide){     // モーターA: 正転
-    digitalWrite(12, HIGH);
-    digitalWrite(9, LOW);
+    digitalWrite(12, HIGH); //正転
+    digitalWrite(9, LOW); //ブレーキOFF
     analogWrite(3, SPEED1);
     
     while(vr > slide){    // 受信したデータよりスライダの位置が大きい場合
@@ -53,8 +54,10 @@ void slide_device(){
       if(-JITTER < diff && diff < JITTER){  // 一定の閾値以内であれば指定の位置まで移動したとみなす
         break;
       }
+      /*割り込み処理で代替しようとしたけどこっちじゃないと即オーバーフローorガタガタ*/
       if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
         String str = Serial.readStringUntil(';');
+        //Serial.flush();
         slide = str.toInt();
       }
       delay(1);
@@ -66,8 +69,8 @@ void slide_device(){
     analogWrite(3,  SPEED1);
   }
 //  else if(vr < slide){     // モーターA: 逆転 
-//    digitalWrite(12, LOW);
-//    digitalWrite(9, LOW);
+//      digitalWrite(12, LOW); 　 //逆転
+//      digitalWrite(9, LOW); //ブレーキOFF
 //    analogWrite(3, SPEED2);
 //   
 //   while(vr < slide){    // 受信したデータよりスライダの位置が小さい場合
@@ -76,13 +79,15 @@ void slide_device(){
 //      if(-JITTER < diff && diff < JITTER){  // 一定の閾値以内であれば指定の位置まで移動したとみなす
 //        break;
 //      }
+        /*割り込み処理で代替しようとしたけどこっちじゃないと即オーバーフローorガタガタ*/
 //      if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
 //        String str = Serial.readStringUntil(';');
+          //Serial.flush();
 //        slide = str.toInt();
 //      }
 //      delay(1);
 //    }
-//    digitalWrite(9, HIGH); 
+//    digitalWrite(9, HIGH); //ブレーキON
 //  }
 }
 
