@@ -60,8 +60,8 @@ void slide_device(){
         String str = Serial.readStringUntil(';');
         //Serial.flush();
         slide = str.toInt();
-        vr = analogRead(A2);
-         Serial.println(vr);
+        int v = analogRead(A2);
+         Serial.println(v);
       }
       delay(1);
     }  
@@ -88,8 +88,8 @@ void slide_device(){
       if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
         String str = Serial.readStringUntil(';');
         slide = str.toInt();
-         vr = analogRead(A2);
-         Serial.println(vr);
+        int v = analogRead(A2);
+         Serial.println(v);
       }
       delay(1);
     }

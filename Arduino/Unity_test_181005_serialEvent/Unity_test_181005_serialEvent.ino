@@ -89,5 +89,5 @@ void serialEvent() {
       digitalWrite(9, HIGH);//ブレーキON
     }
   }
-  Serial.flush();
+  //Serial.flush();
 }

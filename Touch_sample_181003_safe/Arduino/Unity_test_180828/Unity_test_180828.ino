@@ -30,9 +30,10 @@ void loop() {
 
     if(slide >= 0){
       slide_device();
-    }else{
-      speed_change(slide);
     }
+//    }else{
+//      speed_change(slide);
+//    }
   }
 
   int v = analogRead(A2);
