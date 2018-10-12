@@ -44,11 +44,15 @@ public class DeviceController : MonoBehaviour {
 
     public const int jitter = 20; // スライダが正しい位置に移動したかを判定する閾値
 
+    bool arduinoFlag; //kataoka 181003 Arduino側からシリアル通信の割り込み過ぎを防ぐフラグ
+
     void Start()
     {
         sendFlag = 0; //信号を送信するフラグの初期化
         preLength = 0; //前フレームにスライダを伸ばした距離の初期化
         speed_rank = -1; //モータの回転速度の段階の初期化
+
+        arduinoFlag = true;
 
         //信号を受信したときに、そのメッセージの処理を行う
         serialHandler.OnDataReceived += OnDataReceived;
@@ -118,7 +122,7 @@ public class DeviceController : MonoBehaviour {
         }
 
 
-        if (sendFlag == 1)  // yama 180215 この判定で送信処理を行わないと，送信がバグる
+        if ((sendFlag == 1) && (arduinoFlag))  // yama 180215 この判定で送信処理を行わないと，送信がバグる
         {
             if (0 <= sliderLength && sliderLength < 1024)    // yama 180122 応急処置、本来であれば別の場所で例外処理をするべき
             {
@@ -161,9 +165,18 @@ public class DeviceController : MonoBehaviour {
             if (message != string.Empty)        // yama 180719 受信データが空でないか確認してから処理
             {
                 Debug.Log("move = " + message);
+                /*Arduinoが受信可能状態であるかどうかを判別*/
+                if (message == "F")
+                {
+                    arduinoFlag = false;
+                }
+                else
+                {
+                    arduinoFlag = true;
+                }
 
                 /* yama 180719 デバイス静止時にスライダの位置が変化した場合の対応 */
-                if (sendFlag == 0)      // yama 180731 ここで判定している二つの条件（デバイス静止時，オブジェクトに接触）は同時に判定するとクラッシュする
+                if ((sendFlag == 0)&&arduinoFlag)      // yama 180731 ここで判定している二つの条件（デバイス静止時，オブジェクトに接触）は同時に判定するとクラッシュする
                 {
                     if (DtoO == true)
                     {
@@ -174,7 +187,8 @@ public class DeviceController : MonoBehaviour {
                             string str = sliderLength.ToString();
                             //string str = (preLength / 2).ToString();
 
-                            if (0 <= preLength && preLength < 1024) 
+                            if (0 <= sliderLength && sliderLength < 1024)
+                                //if (0 <= preLength && preLength < 1024) 
                             {
                                 serialHandler.Write(str + ";");     // yama 180731 一定範囲内でなければArduinoに更新情報を送信
                                 Debug.Log("preLength = " + str);

@@ -26,7 +26,6 @@ void loop() {
 
     String str = Serial.readStringUntil(';');
     slide = str.toInt();
-    //Serial.println("1");
 
     if(slide >= 0){
       slide_device();
@@ -52,7 +51,7 @@ void slide_device(){
       vr = analogRead(A2);
       diff = vr - slide;
       if(-JITTER < diff && diff < JITTER){  // 一定の閾値以内であれば指定の位置まで移動したとみなす
-        slide = vr;
+        //slide = vr;
         //digitalWrite(9, HIGH); //LOW…ブレーキOFF
         break;
       }
@@ -61,6 +60,8 @@ void slide_device(){
         String str = Serial.readStringUntil(';');
         //Serial.flush();
         slide = str.toInt();
+        vr = analogRead(A2);
+         Serial.println(vr);
       }
       delay(1);
     }  
@@ -80,14 +81,15 @@ void slide_device(){
       int diff = vr - slide;
       if(-JITTER < diff && diff < JITTER){  // 一定の閾値以内であれば指定の位置まで移動したとみなす
         //digitalWrite(9, HIGH); //ブレーキON
-        slide = vr;
+        //slide = vr;
         break;
       }
         /*割り込み処理で代替しようとしたけどこっちじゃないと即オーバーフローorガタガタ*/
       if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
         String str = Serial.readStringUntil(';');
-          //Serial.flush();
         slide = str.toInt();
+         vr = analogRead(A2);
+         Serial.println(vr);
       }
       delay(1);
     }

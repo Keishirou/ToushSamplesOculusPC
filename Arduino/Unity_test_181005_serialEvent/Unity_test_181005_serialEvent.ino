@@ -23,10 +23,10 @@ void setup() {
 
 void loop() {
   int vr = analogRead(A2); //A2にボリューム部の2ピンを接続。1=5V,0=GND
-  str = Serial.readStringUntil(';');
-  slide = str.toInt();
-  //Serial.println(slide);
-  Serial.flush();
+  Serial.println(vr);
+  //str = Serial.readStringUntil(';');
+  //slide = str.toInt();
+  //Serial.flush();
 }
 
 //シリアル割り込み処理
@@ -38,7 +38,7 @@ void serialEvent() {
   Serial.println("F"); //割り込み処理を重複させないためのフラグ
   if (Serial.available() > 0) {
     str = Serial.readStringUntil(';');
-    Serial.flush();
+    //Serial.flush();
     //str = Serial.readStringUntil('\n');
     //slide = Serial.read();
     slide = str.toInt();
@@ -60,7 +60,7 @@ void serialEvent() {
         /*割り込み処理で代替しようとしたけどこっちじゃないと即オーバーフローorガタガタ*/
         if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
           String str = Serial.readStringUntil(';');
-          Serial.flush();
+          //Serial.flush();
           slide = str.toInt();
         }
         delay(1);
@@ -80,7 +80,7 @@ void serialEvent() {
     /*割り込み処理で代替しようとしたけどこっちじゃないと即オーバーフローorガタガタ*/
         if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
           String str = Serial.readStringUntil(';');
-          Serial.flush();
+          //Serial.flush();
           slide = str.toInt();
         }
 
@@ -89,4 +89,5 @@ void serialEvent() {
       digitalWrite(9, HIGH);//ブレーキON
     }
   }
+  Serial.flush();
 }
