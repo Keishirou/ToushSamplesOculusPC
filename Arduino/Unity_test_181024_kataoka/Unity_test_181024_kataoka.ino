@@ -73,6 +73,10 @@ void slide_device(){
         String str = Serial.readStringUntil(';');
         //Serial.flush();
         slide = str.toInt();
+         if(slide < 0){
+          //digitalWrite(9, HIGH);
+          break;
+        }
         vr = analogRead(A2);
          //speed = (MAX_SPEED-MIN_SPEED)*(1.0-(float)(vr - slide)/MAX_LEN); 遠い＝遅い
      speed = (MAX_SPEED-MIN_SPEED)*((float)(vr - slide)/MAX_LEN); //遠い＝早い
@@ -110,6 +114,10 @@ void slide_device(){
       if ( Serial.available() ) {   // 上記で制止しなかったとしても，伸縮距離が変更されているかもしれないので再度データを受信
         String str = Serial.readStringUntil(';');
         slide = str.toInt();
+         if(slide < 0){
+          //digitalWrite(9, HIGH);
+          break;
+        }
         vr = analogRead(A2);
       //speed = (MAX_SPEED-MIN_SPEED)*(1.0-(float)(slide - vr)/MAX_LEN); 遠い＝遅い
      speed = (MAX_SPEED-MIN_SPEED)*((float)(slide - vr)/MAX_LEN); //遠い＝早い
