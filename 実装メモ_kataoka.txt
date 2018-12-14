@@ -35,3 +35,6 @@ DeviceController.cs
 
 20181012
 Arduino内での力の予測と反力制御の実装開始
+
+20181215
+IEEEVRデモ動画撮影開始
