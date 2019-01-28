@@ -1,7 +1,7 @@
 #define SPEED1 255  // スライダを縮める場合
 #define SPEED2 170  
 #define MAX_SPEED 255
-#define MIN_SPEED 110 //動かす速度の最低値
+#define MIN_SPEED 140 //動かす速度の最低値
 #define MAX_LEN 1023 //sliderの長さの最大値
 #define JITTER 20 // スライダが正しい位置に移動したかを判定する閾値
 
