@@ -65,7 +65,7 @@ public class CheckCollider : MonoBehaviour {
                 //    pd.Get_CollisionData(this.name);
                 //}
 
-                pd.Get_CollisionData(this.name);
+               pd.Get_CollisionData(this.name);
             }
         }
     }
