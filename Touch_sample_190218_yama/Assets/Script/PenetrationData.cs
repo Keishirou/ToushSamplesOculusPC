@@ -59,8 +59,8 @@ public class PenetrationData : MonoBehaviour {
         if (eNum == 1)
         {          
             // yama 190201 実験実施時はコントローラ，デバックや動作確認の際はキーボードで仮想物体の切り替え
-            if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger) || Input.GetKeyDown(KeyCode.Space))
-            {
+            //if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger) || Input.GetKeyDown(KeyCode.Space))
+            //{
                 if (contactP)
                 {
                     if (!oe.Set_PointFlag())
@@ -90,9 +90,9 @@ public class PenetrationData : MonoBehaviour {
                 }
                 else
                 {
-                    Debug.Log("ERROR：ポイントに対して接触していません．");
+                    //Debug.Log("ERROR：ポイントに対して接触していません．");
                 }
-            }
+            //}
 
             // yama 190201 デバックや動作確認時，途中で終了するとそれまでのデータが保存されないので，強制終了用
             if (Input.GetKeyDown(KeyCode.M))

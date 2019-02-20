@@ -24,10 +24,16 @@ public class ModeCheck : MonoBehaviour {
             if (contact.otherCollider.name == "Device")
             {
                 //Debug.Log("Device");
+                gameObject.GetComponent<Renderer>().material.color = Color.red;
                 ModeSelect.mode = modeNum;
                 ModeSelect.modeName = modeName;
             }
         }
 
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
 }

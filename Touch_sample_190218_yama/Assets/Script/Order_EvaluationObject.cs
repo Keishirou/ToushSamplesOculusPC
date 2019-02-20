@@ -82,7 +82,7 @@ public class Order_EvaluationObject : MonoBehaviour
 
         if(evaluationNum == 1)
         {
-            repeat = 4;
+            repeat = 1; //繰り返し回数？？
         }
         else if(evaluationNum == 2)
         {
@@ -95,8 +95,8 @@ public class Order_EvaluationObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger) || Input.GetKeyDown(KeyCode.Space))
-        { 
+        //if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger) || Input.GetKeyDown(KeyCode.Space))
+        //{ 
             if (evaluationNum == 2)
             {
                 if (nextStroke)
@@ -105,9 +105,11 @@ public class Order_EvaluationObject : MonoBehaviour
                     NextOrderStroke();
                     pd.Get_EvaluationObj(order[numS].obj);
                     nextStroke = false;
-                }      
+                    //ModeSelect.mode = 3;
+                }
+   
             }
-        }
+        //}
     }
 
     /// <summary>
@@ -133,6 +135,7 @@ public class Order_EvaluationObject : MonoBehaviour
             else
             {
                 pd.Finish_Evaluation1();
+                ModeSelect.mode = 5;
             }
         }
 
@@ -164,6 +167,12 @@ public class Order_EvaluationObject : MonoBehaviour
             //    pd.Write_NextRepeat(countRepeat);
             //    Debug.Log("OK");
             //}
+
+            if (countRepeat > repeat)
+            {
+                ModeSelect.mode = 7;
+                Debug.Log("7");
+            }
         }
 
         if (countRepeat <= repeat)
@@ -181,6 +190,11 @@ public class Order_EvaluationObject : MonoBehaviour
                     goalObj = child.gameObject;
                 }
             }
+        }
+        else
+        {
+            ModeSelect.mode = 7;
+            Debug.Log("7");
         }
     }
 
