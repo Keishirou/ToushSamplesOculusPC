@@ -21,6 +21,9 @@ public class Order_EvaluationObject : MonoBehaviour
 
     bool nextPoint;     // yama 181228 実験1のとき，次のポイントを表示を許可するかどうか
 
+    public static int pCount = 0;
+    public static int sCount = 0;
+
     struct OrderObj
     {
         public GameObject obj;
@@ -86,7 +89,7 @@ public class Order_EvaluationObject : MonoBehaviour
         }
         else if(evaluationNum == 2)
         {
-            repeat = 1;
+            repeat = 0;
         }
 
         Debug.Log("OE_OK");
@@ -131,11 +134,12 @@ public class Order_EvaluationObject : MonoBehaviour
             if (countRepeat <= repeat)
             {
                 pd.Write_NextRepeat(countRepeat);
+                //pCount++;
             }
             else
             {
                 pd.Finish_Evaluation1();
-                ModeSelect.mode = 5;
+                ModeSelect.mode = 5; //kata 190301 1点接触の終了
             }
         }
 
@@ -168,11 +172,11 @@ public class Order_EvaluationObject : MonoBehaviour
             //    Debug.Log("OK");
             //}
 
-            if (countRepeat > repeat)
-            {
-                ModeSelect.mode = 7;
-                Debug.Log("7");
-            }
+            //if (countRepeat > repeat)
+            //{
+                //ModeSelect.mode = 7; //kata 190301 なぞりの終了
+                //Debug.Log("7");
+           // }
         }
 
         if (countRepeat <= repeat)
@@ -181,7 +185,7 @@ public class Order_EvaluationObject : MonoBehaviour
             order[numS].obj.transform.eulerAngles = new Vector3(0, order[numS].angle, 0);
 
             Debug.Log("Name: " + order[numS].obj.name + ", yAngle = " + order[numS].angle + ", numS = " + numS);
-
+            sCount++;
             foreach (Transform child in order[numS].obj.transform)
             {
                 child.gameObject.SetActive(true);
@@ -193,8 +197,8 @@ public class Order_EvaluationObject : MonoBehaviour
         }
         else
         {
-            ModeSelect.mode = 7;
-            Debug.Log("7");
+            ModeSelect.mode = 7; //kata 190301 なぞりの終了
+            //Debug.Log("7");
         }
     }
 
@@ -256,8 +260,10 @@ public class Order_EvaluationObject : MonoBehaviour
                     pd.Get_EvaluationObj(pd.objT);
 
                     nextPoint = false;
+                    pCount++; //kata 190301 1点接触の回数カウント
                 }
             }
+            //pCount++;
         }
     }
 

@@ -53,11 +53,11 @@ public class ModeSelect : MonoBehaviour {
             //mode = 3;
         }else if(mode == 3)
         {
-            messageText.GetComponent<TextMesh>().text = "緑色の立方体に触れてください";
+            messageText.GetComponent<TextMesh>().text = "緑色の立方体に触れてください\n残り"+(6 - Order_EvaluationObject.pCount)+"/6 回";
 
         }else if(mode == 4)
         {
-            messageText.GetComponent<TextMesh>().text = "赤い点に触れてみてください";
+            messageText.GetComponent<TextMesh>().text = "赤い点に触れてみてください\n残り" + (6 - Order_EvaluationObject.pCount)+ "/6 回";
 
         }else if(mode == 5)
         {
@@ -73,7 +73,7 @@ public class ModeSelect : MonoBehaviour {
             //messageText.GetComponent<TextMesh>().text = "黒い線をなぞってみてください\n緑の立方体が始点です";
         }else if(mode == 6)
         {
-            messageText.GetComponent<TextMesh>().text = "黒い線をなぞってみてください\n緑の立方体が始点です";
+            messageText.GetComponent<TextMesh>().text = "黒い線をなぞってみてください\n緑の立方体が始点です\n残り" + (5 - Order_EvaluationObject.sCount) + "/5 回";
       
         }
         else if (mode == 7)

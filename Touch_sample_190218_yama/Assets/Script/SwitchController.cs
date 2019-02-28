@@ -36,13 +36,13 @@ public class SwitchController : MonoBehaviour {
             cc.Change_Color(1);
             if(oe.evaluationNum == 1)
             {
-                ModeSelect.mode = 3;
+                ModeSelect.mode = 3; //緑色の立方体に触れてください
             }
             else
             {
                 if (ModeSelect.mode < 7)
                 {
-                    ModeSelect.mode = 6;
+                    ModeSelect.mode = 6; //黒い線をなぞってみてください\n緑の立方体が始点です
 
                 }
                 // Debug.Log("6");
@@ -53,7 +53,7 @@ public class SwitchController : MonoBehaviour {
             cc.Change_Color(0);
             if (oe.evaluationNum == 1)
             {
-                ModeSelect.mode = 4;
+                ModeSelect.mode = 4; //赤い点に触れてみてください
             }
         }
 	}
