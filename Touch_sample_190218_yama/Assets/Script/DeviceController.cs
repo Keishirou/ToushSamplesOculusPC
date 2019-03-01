@@ -407,7 +407,7 @@ public class DeviceController : MonoBehaviour {
                 }
                 if (hitCount == 2) // yama 181212 デバイスのレイが床とオブジェクトの両方に接触しているとき
                 {
-                    Write_PreLength(); // yama 181212 事前の伸縮を実行
+                    //Write_PreLength(); // yama 181212 事前の伸縮を実行
                 }
             }
             hitCount = 0; // yama 181212 レイのヒット数をリセット

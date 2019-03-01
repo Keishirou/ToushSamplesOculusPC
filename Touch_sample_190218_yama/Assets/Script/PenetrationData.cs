@@ -80,7 +80,7 @@ public class PenetrationData : MonoBehaviour {
 
                         #endregion
 
-                        objP.GetComponent<ChangeObjColor>().Change_Color(0);
+                        //objP.GetComponent<ChangeObjColor>().Change_Color(0);
 
                         oe.Set_NextEvaluation();
 

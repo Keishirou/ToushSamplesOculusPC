@@ -12,7 +12,8 @@ public class Order_EvaluationObject : MonoBehaviour
     public GameObject[] pointObj, strokeObj;
     GameObject startObj, goalObj;
     string goalName = "Goal";
-    float[] yAngle = { -90, -45, 0, 45, 90 };
+    float[] yAngle = { 0, 45, 90 };
+    //float[] yAngle = { -90, -45, 0, 45, 90 };
     int numP = 0;
     int numS = 0;
     int countRepeat = 0;
@@ -21,8 +22,8 @@ public class Order_EvaluationObject : MonoBehaviour
 
     bool nextPoint;     // yama 181228 実験1のとき，次のポイントを表示を許可するかどうか
 
-    public static int pCount = 0;
-    public static int sCount = 0;
+    public static int pCount = 0; //1点接触の回数カウント
+    public static int sCount = 0; //なぞりの回数カウント
 
     struct OrderObj
     {
@@ -85,7 +86,8 @@ public class Order_EvaluationObject : MonoBehaviour
 
         if(evaluationNum == 1)
         {
-            repeat = 1; //繰り返し回数？？
+            repeat = 0; //繰り返し回数？？
+            Touch_Switxh(); //switchなしで初回表示
         }
         else if(evaluationNum == 2)
         {
@@ -185,7 +187,9 @@ public class Order_EvaluationObject : MonoBehaviour
             order[numS].obj.transform.eulerAngles = new Vector3(0, order[numS].angle, 0);
 
             Debug.Log("Name: " + order[numS].obj.name + ", yAngle = " + order[numS].angle + ", numS = " + numS);
-            sCount++;
+
+            sCount++; // なぞりの回数カウント
+
             foreach (Transform child in order[numS].obj.transform)
             {
                 child.gameObject.SetActive(true);

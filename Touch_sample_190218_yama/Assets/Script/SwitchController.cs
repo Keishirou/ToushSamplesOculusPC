@@ -50,7 +50,7 @@ public class SwitchController : MonoBehaviour {
         }
         else
         {
-            cc.Change_Color(0);
+            //cc.Change_Color(0);
             if (oe.evaluationNum == 1)
             {
                 ModeSelect.mode = 4; //赤い点に触れてみてください

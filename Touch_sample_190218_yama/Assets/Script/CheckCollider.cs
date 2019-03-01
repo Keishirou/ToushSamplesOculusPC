@@ -7,10 +7,23 @@ public class CheckCollider : MonoBehaviour {
     GameObject targetObj;
     PenetrationData pd;
     DeviceController dc;
+    Order_EvaluationObject oe;
+    GameObject eSet;
 
-	// Use this for initialization
-	void Start () {
-        GameObject eSet = GameObject.Find(evaluationSet);
+    // Use this for initialization
+    void Start () {
+        if (GameObject.Find("Evaluation_Set1"))
+        {
+            eSet = GameObject.Find("Evaluation_Set1");
+
+        }else if (GameObject.Find("Evaluation_Set2"))
+        {
+            eSet = GameObject.Find("Evaluation_Set2");
+        }
+        else
+        {
+
+        }
 
         string name = this.gameObject.transform.parent.name.Replace("_Set", "");    // yama 181203 接触対象のオブジェクト名を選択（～_Setの～に当たる名前にする必要あり）
 
@@ -29,7 +42,8 @@ public class CheckCollider : MonoBehaviour {
         }
 
         pd = eSet.GetComponent<PenetrationData>();
-	}
+        oe = eSet.GetComponent<Order_EvaluationObject>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -47,7 +61,7 @@ public class CheckCollider : MonoBehaviour {
                 //{
                 //    pd.Get_CollisionData(this.name);
                 //}
-
+                oe.Touch_Switxh(); //次の仮想物体を表示
                 pd.Get_CollisionData(this.name);
             }
         }
@@ -64,8 +78,8 @@ public class CheckCollider : MonoBehaviour {
                 //{
                 //    pd.Get_CollisionData(this.name);
                 //}
-
-               pd.Get_CollisionData(this.name);
+                //oe.Touch_Switxh(); //次の仮想物体を表示
+                pd.Get_CollisionData(this.name);
             }
         }
     }
