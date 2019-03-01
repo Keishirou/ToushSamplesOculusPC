@@ -14,7 +14,7 @@ public class ModeSelect : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        mode = 0; //初期化
+        mode = 1; //初期化
 
         //1点
         pointDemoObj.GetComponent<Order_EvaluationObject>().enabled = false;
@@ -41,7 +41,8 @@ public class ModeSelect : MonoBehaviour {
 	void Update () {
         if (mode == 1)
         {
-            messageText.GetComponent<TextMesh>().text = modeName+"でよろしいですか？";
+            //messageText.GetComponent<TextMesh>().text = modeName+"でよろしいですか？";
+            messageText.GetComponent<TextMesh>().text = "STARTボタンを押してください";
             startObj.SetActive(true);
         }else if(mode == 2)
         {

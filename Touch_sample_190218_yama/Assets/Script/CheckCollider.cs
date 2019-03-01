@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CheckCollider : MonoBehaviour {
     string evaluationSet = "Evaluation_Set";
@@ -61,7 +62,12 @@ public class CheckCollider : MonoBehaviour {
                 //{
                 //    pd.Get_CollisionData(this.name);
                 //}
+                //Invoke("oe.Touch_Switxh",5.0f);
                 oe.Touch_Switxh(); //次の仮想物体を表示
+
+                //3.5秒後に実行する
+                //StartCoroutine(DelayMethod(3.5f, oe.Touch_Switxh));
+
                 pd.Get_CollisionData(this.name);
             }
         }
@@ -82,5 +88,17 @@ public class CheckCollider : MonoBehaviour {
                 pd.Get_CollisionData(this.name);
             }
         }
+    }
+
+    /// <summary>
+    /// 渡された処理を指定時間後に実行する
+    /// </summary>
+    /// <param name="waitTime">遅延時間[ミリ秒]</param>
+    /// <param name="action">実行したい処理</param>
+    /// <returns></returns>
+    private IEnumerator DelayMethod(float waitTime, Action action)
+    {
+        yield return new WaitForSeconds(waitTime);
+        action();
     }
 }

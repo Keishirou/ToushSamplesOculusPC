@@ -88,10 +88,12 @@ public class Order_EvaluationObject : MonoBehaviour
         {
             repeat = 0; //繰り返し回数？？
             Touch_Switxh(); //switchなしで初回表示
+            ModeSelect.mode = 4;
         }
         else if(evaluationNum == 2)
         {
             repeat = 0;
+            ModeSelect.mode = 6;
         }
 
         Debug.Log("OE_OK");
@@ -122,7 +124,23 @@ public class Order_EvaluationObject : MonoBehaviour
     /// </summary>
     void NextOrderPoint()
     {
-        pointObj[numP].SetActive(false);
+        //pointObj[numP].SetActive(false);
+
+        //if (pointObj[numP].transform.FindChild("Point"))
+        //{
+        //    Transform tempChild = pointObj[numP].transform.FindChild("Point");
+        //    tempChild.gameObject.transform.
+        //}
+
+        //赤い点のみ消す
+        foreach(Transform temp in pointObj[numP].transform)
+        {
+            if(temp.name == "Point")
+            {
+                temp.gameObject.SetActive(false);
+            }
+        }
+
         pd.Finish_ContactObj();             // yama 181224 接触判定をいったん取り消す（消える前の仮想物体の接触判定が残ってしまうから）
 
         numP++;
@@ -147,7 +165,10 @@ public class Order_EvaluationObject : MonoBehaviour
 
         if (countRepeat <= repeat)
         {
-            pointObj[numP].SetActive(true);
+            //1.5秒後に実行する
+            StartCoroutine(DelayMethod(1.5f,numP));
+            
+            //pointObj[numP].SetActive(true);
         }
     }
 
@@ -278,5 +299,18 @@ public class Order_EvaluationObject : MonoBehaviour
     public bool Set_PointFlag()
     {
         return nextPoint;
+    }
+
+    /// <summary>
+    /// 渡された処理を指定時間後に実行する
+    /// </summary>
+    /// <param name="waitTime">遅延時間[ミリ秒]</param>
+    /// <param name="action">実行したい処理</param>
+    /// <returns></returns>
+    private IEnumerator DelayMethod(float waitTime, int temp_num)
+    {
+        yield return new WaitForSeconds(waitTime);
+        pointObj[(temp_num - 1)].SetActive(false);
+        pointObj[temp_num].SetActive(true);
     }
 }
