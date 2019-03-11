@@ -42,7 +42,8 @@ public class ModeSelect : MonoBehaviour {
         if (mode == 1)
         {
             //messageText.GetComponent<TextMesh>().text = modeName+"でよろしいですか？";
-            messageText.GetComponent<TextMesh>().text = "STARTボタンを押してください";
+            //messageText.GetComponent<TextMesh>().text = "STARTボタンを押してください";
+            messageText.GetComponent<TextMesh>().text = "Please touch the START button!";
             startObj.SetActive(true);
         }else if(mode == 2)
         {
@@ -60,11 +61,13 @@ public class ModeSelect : MonoBehaviour {
             //mode = 3;
         }else if(mode == 3)
         {
-            messageText.GetComponent<TextMesh>().text = "緑色の立方体に触れてください\n残り"+(3 - Order_EvaluationObject.pCount)+"/3 回";
+            //messageText.GetComponent<TextMesh>().text = "緑色の立方体に触れてください\n残り"+(3 - Order_EvaluationObject.pCount)+"/3 回";
+            messageText.GetComponent<TextMesh>().text = "Please touch the GREEN CUBE!\n" + (3 - Order_EvaluationObject.pCount) + "/3 times left!";
 
-        }else if(mode == 4)
+        }
+        else if(mode == 4)
         {
-            messageText.GetComponent<TextMesh>().text = "赤い点に触れてみてください\n残り" + (3 - Order_EvaluationObject.pCount)+ "/3 回";
+            messageText.GetComponent<TextMesh>().text = "Please touch the RED BALL!\n" + (3 - Order_EvaluationObject.pCount)+ "/3 times left!";
 
         }else if(mode == 5)
         {
@@ -80,8 +83,9 @@ public class ModeSelect : MonoBehaviour {
             //messageText.GetComponent<TextMesh>().text = "黒い線をなぞってみてください\n緑の立方体が始点です";
         }else if(mode == 6)
         {
-            messageText.GetComponent<TextMesh>().text = "黒い線をなぞってみてください\n緑の立方体が始点です\n残り" + (3 - Order_EvaluationObject.sCount) + "/3 回";
-      
+            //messageText.GetComponent<TextMesh>().text = "黒い線をなぞってみてください\n緑の立方体が始点です\n残り" + (3 - Order_EvaluationObject.sCount) + "/3 回";
+            messageText.GetComponent<TextMesh>().text = "Let's trace the BLACK LINE!\nThe starting point is the GREEN CUBE.\n" + (3 - Order_EvaluationObject.sCount) + "/3 times left!";
+
         }
         else if (mode == 7)
         {
@@ -89,7 +93,7 @@ public class ModeSelect : MonoBehaviour {
             strokeDemoObj.GetComponent<PenetrationData>().enabled = false;
             //strokeDemoObj.GetComponent<SwitchController>().enabled = false;
             strokeDemoObj.SetActive(false);
-            messageText.GetComponent<TextMesh>().text = "最後は，自由に触ってみてください";
+            messageText.GetComponent<TextMesh>().text = "Finally, Please touch freely!!";
 
             foreach(GameObject temp in testObj)
             {
