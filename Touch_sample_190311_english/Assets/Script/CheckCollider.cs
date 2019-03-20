@@ -13,6 +13,8 @@ public class CheckCollider : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
+        //eSetにはセット名を入力
         if (GameObject.Find("Evaluation_Set1"))
         {
             eSet = GameObject.Find("Evaluation_Set1");
@@ -23,7 +25,7 @@ public class CheckCollider : MonoBehaviour {
         }
         else
         {
-
+            Debug.Log("セット名エラー");
         }
 
         string name = this.gameObject.transform.parent.name.Replace("_Set", "");    // yama 181203 接触対象のオブジェクト名を選択（～_Setの～に当たる名前にする必要あり）

@@ -62,12 +62,12 @@ public class ModeSelect : MonoBehaviour {
         }else if(mode == 3)
         {
             //messageText.GetComponent<TextMesh>().text = "緑色の立方体に触れてください\n残り"+(3 - Order_EvaluationObject.pCount)+"/3 回";
-            messageText.GetComponent<TextMesh>().text = "Please touch the GREEN CUBE!\n" + (3 - Order_EvaluationObject.pCount) + "/3 times left!";
+            messageText.GetComponent<TextMesh>().text = "Please touch the RED BALL!\n" + (3 - Order_EvaluationObject.pCount) + "/3 times left!";
 
         }
         else if(mode == 4)
         {
-            messageText.GetComponent<TextMesh>().text = "Please touch the RED BALL!\n" + (3 - Order_EvaluationObject.pCount)+ "/3 times left!";
+            messageText.GetComponent<TextMesh>().text = "Please touch the GREEN CUBE!\n" + (3 - Order_EvaluationObject.pCount)+ "/3 times left!";
 
         }else if(mode == 5)
         {
@@ -84,7 +84,7 @@ public class ModeSelect : MonoBehaviour {
         }else if(mode == 6)
         {
             //messageText.GetComponent<TextMesh>().text = "黒い線をなぞってみてください\n緑の立方体が始点です\n残り" + (3 - Order_EvaluationObject.sCount) + "/3 回";
-            messageText.GetComponent<TextMesh>().text = "Let's trace the BLACK LINE!\nThe starting point is the GREEN CUBE.\n" + (3 - Order_EvaluationObject.sCount) + "/3 times left!";
+            messageText.GetComponent<TextMesh>().text = "Let's trace the BLACK LINE!\nThe starting point is the RED BALL.\n" + (3 - Order_EvaluationObject.sCount) + "/3 times left!";
 
         }
         else if (mode == 7)
