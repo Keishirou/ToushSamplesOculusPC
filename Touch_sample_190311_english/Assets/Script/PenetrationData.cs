@@ -244,14 +244,16 @@ public class PenetrationData : MonoBehaviour {
         {
             foreach (Transform child in obj.transform) // yama 181203 自分と同じ階層にあるスタート，ゴールオブジェクトの取得
             {
-                if (child.gameObject.name == "Goal")
+                if (child.gameObject.name == "Start") //"Goal")
                 {
                     objG = child.gameObject;
+                    
                     Debug.Log("Goal_Set");
                 }
-                else if (child.gameObject.name == "Start")
+                else if (child.gameObject.name == "Goal") //Start")
                 {
                     objS = child.gameObject;
+                    
                     Debug.Log("Start_Set");
                 }
             }

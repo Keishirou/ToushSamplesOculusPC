@@ -67,7 +67,7 @@ public class ModeSelect : MonoBehaviour {
         }
         else if(mode == 4)
         {
-            messageText.GetComponent<TextMesh>().text = "Please touch the GREEN CUBE!\n" + (3 - Order_EvaluationObject.pCount)+ "/3 times left!";
+            messageText.GetComponent<TextMesh>().text = "Please touch the RED BALL!\n" + (3 - Order_EvaluationObject.pCount)+ "/3 times left!";
 
         }else if(mode == 5)
         {
