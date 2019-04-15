@@ -12,7 +12,7 @@ public class Order_EvaluationObject : MonoBehaviour
     public GameObject[] pointObj, strokeObj;
     GameObject startObj, goalObj;
     string goalName = "Goal";
-    float[] yAngle = { 0, 45, 90 };
+    float[] yAngle = { 180, -45, -90 };
     //float[] yAngle = { -90, -45, 0, 45, 90 };
     int numP = 0;
     int numS = 0;
