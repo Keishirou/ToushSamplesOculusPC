@@ -67,7 +67,7 @@ public class DeviceController : MonoBehaviour {
 
     Vector3 hitNormalO, hitNormalF;     // yama 181215 仮想物体と床の法線
 
-    private int feedbackPattern = 1;         // yama 181220 どのフィードバックで行うか指定
+    private int feedbackPattern = 0;//1;         // yama 181220 どのフィードバックで行うか指定
 
     void Start()
     {
