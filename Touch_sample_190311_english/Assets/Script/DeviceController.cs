@@ -67,7 +67,7 @@ public class DeviceController : MonoBehaviour {
 
     Vector3 hitNormalO, hitNormalF;     // yama 181215 仮想物体と床の法線
 
-    private int feedbackPattern = 0;//1;         // yama 181220 どのフィードバックで行うか指定
+    private int feedbackPattern = 1;//1;         // yama 181220 どのフィードバックで行うか指定
 
     void Start()
     {
@@ -452,6 +452,7 @@ public class DeviceController : MonoBehaviour {
         }
 
         //Debug.Log("time = " + Time.deltaTime);
+        Debug.Log(feedbackPattern);
     }
 
     /* 受信した信号(message)に対する処理 */
