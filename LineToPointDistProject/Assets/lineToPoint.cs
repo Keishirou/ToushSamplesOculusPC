@@ -21,35 +21,43 @@ public class lineToPoint : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         inputRay = new Ray(Device_Tip.transform.position, End.transform.position);
-        mesh = Point.GetComponent<MeshFilter>().mesh;
-        //mesh = Point.GetComponent<MeshFilter>().mesh;
-        vertices = mesh.vertices;
 
-        tempRotation = Point.transform.rotation;
-        Debug.Log(tempRotation);
-
-        for (int i = 0; i < vertices.Length; i++)
+        //PointにMeshがある時のみ処理を行う
+        if (Point.GetComponent<MeshFilter>())
         {
-            vertices[i] += Point.transform.position;
-        }
+            mesh = Point.GetComponent<MeshFilter>().mesh; //最近傍を計算したいMesh取得
+            //mesh = Point.GetComponent<MeshFilter>().mesh;
+            vertices = mesh.vertices; //Meshの頂点情報取得
 
-        min_Len = DistanceToLine(inputRay, vertices[0]);
-        min_Num = 0;
+            tempRotation = Point.transform.rotation;
+            //Debug.Log(tempRotation);
 
-        for (int i=0; i < vertices.Length; i++)
-        {
-            if(min_Len > DistanceToLine(inputRay, vertices[i]))
+            for (int i = 0; i < vertices.Length; i++)
             {
-                min_Len = DistanceToLine(inputRay, vertices[i]);
-                min_Num = i;
-                //Debug.Log(vertices[i]);
+                vertices[i] += Point.transform.position; //ローカル座標を変換
             }
-        }
 
-        Debug.DrawLine(Device_Tip.transform.position, End.transform.position);  //Rayを可視化
-        //Debug.Log(DistanceToLine(inputRay, Point.transform.position));
-        //Debug.DrawLine(Point.transform.position, PerpendicularFootPoint(Device_Tip.transform.position, End.transform.position, Point.transform.position));  //Rayを可視化
-        Debug.DrawLine(vertices[min_Num], PerpendicularFootPoint(Device_Tip.transform.position, End.transform.position, vertices[min_Num]));  //Rayを可視化
+            //初期化
+            min_Len = DistanceToLine(inputRay, vertices[0]);
+            min_Num = 0;
+
+            //最近傍計算
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                if (min_Len > DistanceToLine(inputRay, vertices[i]))
+                {
+                    min_Len = DistanceToLine(inputRay, vertices[i]);
+                    min_Num = i;
+                    //Debug.Log(vertices[i]);
+                }
+            }
+
+            Debug.DrawLine(Device_Tip.transform.position, End.transform.position);  //Rayを可視化
+                                                                                    //Debug.Log(DistanceToLine(inputRay, Point.transform.position));
+                                                                                    //Debug.DrawLine(Point.transform.position, PerpendicularFootPoint(Device_Tip.transform.position, End.transform.position, Point.transform.position));  //Rayを可視化
+            Debug.DrawLine(vertices[min_Num], PerpendicularFootPoint(Device_Tip.transform.position, End.transform.position, vertices[min_Num]));  //Rayを可視化
+        }
+        
     }
 
     public static float DistanceToLine(Ray ray, Vector3 point)
