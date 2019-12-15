@@ -1,4 +1,4 @@
-#define SPEED1 240  // スライダを縮める場合
+#define SPEED1 250  // スライダを縮める場合
 #define SPEED2 170  // スライダを高速で動かす場合（これが最高速）
 #define JITTER 3    // スライダが正しい位置に移動したかを判定する閾値
 
