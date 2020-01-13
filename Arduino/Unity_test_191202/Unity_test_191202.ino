@@ -18,6 +18,7 @@ void setup() {
   analogWrite(3, SPEED1);
   
   speed_level = SPEED1;
+  slide = 500;
 }
 
 void loop() {  
@@ -27,11 +28,13 @@ void loop() {
     //key_move(str);
 
     //String str = Serial.readStringUntil(';');
-    slide = 500;// str.toInt();
+    //slide = 500;// str.toInt();
     //Serial.println("1");
 
     if(-JITTER > v - slide || v - slide > JITTER){
       slide_device();
+      slide = analogRead(A2);
+      Serial.println(slide);
     }
 //    }else{
 //      speed_change(slide);
