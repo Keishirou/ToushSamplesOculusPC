@@ -453,7 +453,7 @@ public class DeviceController : MonoBehaviour
         }
 
         //Debug.Log("time = " + Time.deltaTime);
-        Debug.Log(feedbackPattern);
+        //Debug.Log(feedbackPattern);
     }
 
     /* 受信した信号(message)に対する処理 */
@@ -472,6 +472,7 @@ public class DeviceController : MonoBehaviour
                     {
                         if (DtoO == true)
                         {
+                        Debug.Log(message.ToString());
                             int diff = int.Parse(message) - preLength;  // yama 180731 現在のスライダ位置と全フレームで指定したスライダの位置の差
                                                                         //Debug.Log("diff = " + diff);
 
@@ -513,7 +514,7 @@ public class DeviceController : MonoBehaviour
                     }
                 }
             }
-        }
+    }
         catch (System.Exception e)
         {
             Debug.LogWarning(e.Message);
